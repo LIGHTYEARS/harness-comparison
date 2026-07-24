@@ -1,5 +1,32 @@
 # 阶段性结论
 
+## 结论 0：架构哲学分野贯穿各维度（来自维度 1-4 对比）
+
+- **codex**：细粒度拆分（~90 crate）+ 单一范式 + 极简实现。单 apply_patch、自研轻量模板（仅 `{{ var }}`）、按轮动态工具计划、per-tool 并行标志。
+- **grok-build**：核心集中（~60 crate 但逻辑在单一大 crate）+ 多范式并存 + 功能完备。多套编辑工具、MiniJinja 完整模板语法、静态注册 + tool pack、FuturesUnordered 全并发。
+
+**依据**：维度 1（架构）、维度 3（工具）、维度 4（编辑）的设计要点对比表。
+
+---
+
+## 结论 0.1：多客户端共享状态是最根本的架构差异
+
+- grok-build 有显式 **single-leader-per-machine**，leader 持有共享 MvpAgent，多客户端经 `~/.grok/leader.sock` 以 ACP 接入。
+- codex app-server 为每连接建独立 session，不跨客户端共享 agent 状态。
+
+**启示**：这决定了两者的使用场景——grok-build 适合"IDE + CLI + headless 共享同一 agent 上下文"，codex 适合"每个连接独立"。
+
+---
+
+## 结论 0.2：Prompt 在「安全/混淆」与「灵活性」上取向相反
+
+- codex：全明文 + 仅变量替换（易审计、难动态）。
+- grok-build：XOR 混淆 + Zeroize 清零 + MiniJinja 完整语法 + 动态工具名注入（难审计、易动态）。
+
+**启示**：grok-build 的 XOR 种子硬编码在仓库内，混淆强度有限，仅防 `strings` 可见，非安全边界。
+
+---
+
 ## 结论 1：两个项目的工程哲学截然不同
 
 - **codex**：自研为主、单一范式（apply_patch）、多后端中立、prompt 明文可读。设计取向是"可审计、可移植、聚焦编码"。
