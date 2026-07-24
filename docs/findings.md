@@ -1,5 +1,24 @@
 # 阶段性结论
 
+## 结论 -2：沙箱粒度与记忆技术栈是维度 5-8 最大的差异点（来自维度 5-8 对比）
+
+| 维度 | codex | grok-build |
+|---|---|---|
+| **沙箱粒度** | 每条命令起独立 bwrap 命名空间（粒度=单命令） | nono 在进程级一次性装 Landlock/Seatbelt（粒度=整个 agent 进程） |
+| **网络控制** | `--unshare-net` 断网 + MITM 代理做域名级 Allow/Deny/Ask | seccomp 在子进程 pre_exec 一刀切断网 |
+| **交互命令** | ❌ 无 PTY | ✅ PTY + alacritty_terminal 仿真，支持 vim/top |
+| **长期记忆** | 文件记忆（state DB + git + 频次排序，无向量） | 向量+FTS 混合检索（SQLite-vec + BM25 + 时间衰减 + MMR）+ dream |
+| **压缩阈值** | 90%（硬编码） | 85%（可配） |
+| **压缩策略** | tail-keep（保留最近+summary） | full-replace（全量重建，9 段结构化 prompt） |
+| **流式传输** | SSE + WebSocket 双轨 | 仅 SSE |
+| **后端协议** | Responses API 为主 + Bedrock | Chat/Responses/Messages 三种 |
+| **配置校验** | 5732 行 JSON Schema 强校验 | 无集中 schema，靠 validation.rs |
+| **编辑器集成** | ❌ 无 | ✅ 完整 ACP 协议 + LSP |
+
+**启示**：codex 的沙箱更细粒度（单命令隔离）、网络控制更灵活（域名级放行）；grok-build 的记忆系统更先进（向量检索 + dream）、可扩展性更完整（marketplace + ACP）。两者在"安全隔离"与"智能记忆/生态"上各有侧重。
+
+---
+
 ## 结论 -1：TUI 框架同源但工程哲学分野（来自 TUI 对比）
 
 两者都用 **ratatui 0.29 + crossterm**，渲染策略也一致（立即模式 + 双 buffer diff + SynchronizedUpdate），但工程路线完全不同：
