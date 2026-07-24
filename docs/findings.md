@@ -1,5 +1,21 @@
 # 阶段性结论
 
+## 结论 -1：TUI 框架同源但工程哲学分野（来自 TUI 对比）
+
+两者都用 **ratatui 0.29 + crossterm**，渲染策略也一致（立即模式 + 双 buffer diff + SynchronizedUpdate），但工程路线完全不同：
+
+| 维度 | codex | grok-build |
+|---|---|---|
+| 框架 | 维护 **两个 git fork**（nornagon/ratatui + nornagon/crossterm） | 用上游版本，定制逻辑抽到独立 crate |
+| 布局 | 自研 **Flutter 式 flexbox**（FlexRenderable） | ratatui 原生 Layout/Constraint |
+| 状态 | `App` struct **直接 mutate** | **Elm 式纯函数 reducer**（Action→dispatch→Effect） |
+| 视口 | 内联视口 + 终端原生 scrollback | 虚拟视口 + sticky header + Fullscreen/Minimal 双模式 |
+| 输入 | `select!` 内直接消费 EventStream | **独立线程读输入** + 防流式饿死输入 |
+
+**启示**：codex 走"深度 fork + 自研"路线，grok-build 走"上游 + 分层 crate"路线。后者的 `xai-ratatui-inline`、`xai-grok-pager-render` 等自研 crate 有通用复用价值；前者的 fork 维护成本与漂移风险值得关注。
+
+---
+
 ## 结论 0：架构哲学分野贯穿各维度（来自维度 1-4 对比）
 
 - **codex**：细粒度拆分（~90 crate）+ 单一范式 + 极简实现。单 apply_patch、自研轻量模板（仅 `{{ var }}`）、按轮动态工具计划、per-tool 并行标志。
