@@ -1,5 +1,22 @@
 # 阶段性结论
 
+## 结论 -3：能力边界与工程化是维度 9-10 最大的差异点（来自维度 9-10 对比）
+
+| 维度 | codex | grok-build |
+|---|---|---|
+| **能力架构** | 模型原生能力 + ext/ 扩展混合 | 显式工具集全注册 |
+| **能力宽度** | 无 workflow/scheduler/浏览器工具 | 有 workflow/scheduler/BrowserUse/记忆检索工具 |
+| **多模态** | 无视频 | 有 video_gen，产物落盘 |
+| **构建系统** | Bazel + Cargo 双轨 | 纯 Cargo workspace |
+| **配置校验** | 5732 行 JSON Schema | 无 schema，多层 TOML + 签名策略 |
+| **可观测** | OTel 一体化 + 本地 rollout-trace（不上传） | Mixpanel + Sentry + OTel/fastrace 三栈分立 |
+| **崩溃恢复** | 无信号级 crash handler | 专用 xai-crash-handler（SIGSEGV 捕获 + 报告归档） |
+| **CI** | 20+ GitHub Actions | 此快照无 .github/ |
+
+**启示**：grok-build 能力边界更宽（工作流/调度/浏览器/记忆检索）、工程化更偏产品化（Mixpanel/Sentry/crash-handler）；codex 更偏基础设施（Bazel/JSON Schema/OTel），能力扩展依赖模型原生能力 + ext/ 插件。
+
+---
+
 ## 结论 -2：沙箱粒度与记忆技术栈是维度 5-8 最大的差异点（来自维度 5-8 对比）
 
 | 维度 | codex | grok-build |
