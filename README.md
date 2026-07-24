@@ -21,7 +21,8 @@ harness-comparison/
 
 | 项目 | 版本 / Commit | 主要语言 | 许可证 | 备注 |
 |------|---------------|----------|--------|------|
-|      |               |          |        |      |
+| [codex](https://github.com/openai/codex) | `81da9deb06` | Rust / TypeScript | Apache-2.0 | OpenAI 官方 CLI Agent |
+| [grok-build](https://github.com/xai-org/grok-build) | `69f0ba880a` | Rust | 专有（SpaceXAI） | xAI 官方 CLI Agent |
 
 ## 对比维度
 

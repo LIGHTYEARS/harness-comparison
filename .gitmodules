@@ -1,0 +1,6 @@
+[submodule "agents/codex"]
+	path = agents/codex
+	url = https://github.com/openai/codex.git
+[submodule "agents/grok-build"]
+	path = agents/grok-build
+	url = https://github.com/xai-org/grok-build.git
