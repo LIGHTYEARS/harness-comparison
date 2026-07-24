@@ -27,6 +27,20 @@
 
 ---
 
+## 结论 0.3：编辑工具的"暴露/形态/兼容"三维度哲学分歧（来自维度 4 深入）
+
+| 维度 | codex | grok-build |
+|---|---|---|
+| **工具暴露** | 按模型能力 (`apply_patch_tool_type`) 每 turn 条件注册 | 按 agent profile 会话级锁定唯一编辑工具（ToolKind 去重） |
+| **工具形态** | `ToolSpec::Freeform` + lark 语法文本补丁（非 JSON） | 标准 JSON schema 工具（apply_patch/search_replace/edit/write） |
+| **兼容性** | shell 中 `intercept_apply_patch` 静默拦截，无 flag 无 deprecation | 无兼容层，调错就报错 |
+| **Edit/Write** | 单一 apply_patch，靠 patch 格式区分局部/整文件 | 显式 `ToolKind::Edit` vs `ToolKind::Write` 分离 |
+| **引导方式** | runtime 工程（拦截 + ImplicitInvocation 错误纠正） | prompt 工程（模板硬编码工具名 + 动态解析） |
+
+**启示**：codex 把"补丁语法"塞进工具定义本身，靠 runtime 兜底；grok-build 把"编辑语义"塞进 JSON 参数，靠 prompt 引导。两种范式的实际工程代价（模型输出格式错误率）值得实测对比。
+
+---
+
 ## 结论 1：两个项目的工程哲学截然不同
 
 - **codex**：自研为主、单一范式（apply_patch）、多后端中立、prompt 明文可读。设计取向是"可审计、可移植、聚焦编码"。
