@@ -24,15 +24,18 @@ harness-comparison/
 | [codex](https://github.com/openai/codex) | `81da9deb06` | Rust / TypeScript | Apache-2.0 | OpenAI 官方 CLI Agent |
 | [grok-build](https://github.com/xai-org/grok-build) | `69f0ba880a` | Rust | 专有（SpaceXAI） | xAI 官方 CLI Agent |
 
-## 对比维度
+## 对比维度（10 个，详见 `docs/comparison-matrix.md`）
 
-1. **架构模式** — 单 Agent / 多 Agent / 工作流编排
-2. **Prompt 工程** — system prompt 结构、few-shot、动态注入
-3. **工具系统** — 工具定义格式、调用方式、错误处理
-4. **上下文管理** — token 预算、截断策略、长期记忆
-5. **代码行动** — edit / apply patch、文件读写、命令执行
-6. **评测** — benchmark、成功标准、可复现性
-7. **可扩展性** — 插件机制、自定义模型 / 工具
+1. **架构与组织** — crate 划分、主循环、多入口
+2. **Prompt 工程** — 存储形式、模板、动态注入、AGENTS.md
+3. **工具系统** — 来源（自研/移植）、注册、协议层、动态搜索、并行
+4. **代码行动** — 编辑范式（patch / search_replace / LSP）、流式
+5. **命令执行与沙箱** — shell 工具、沙箱技术、网络策略、权限
+6. **上下文与记忆** — 历史、compaction、长期记忆、dream
+7. **模型交互** — 后端、streaming、切模型、重试
+8. **可扩展性** — 插件、skills、MCP、hooks、配置、编辑器协议
+9. **能力边界** — 多模态、计划模式、工作流、子代理、web 搜索
+10. **工程化与可观测** — 构建、schema、benchmark、tracing、TUI
 
 ## 快速开始
 
