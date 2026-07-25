@@ -1,5 +1,19 @@
 # 阶段性结论
 
+## 结论 -4：AI 友好性——codex 有详尽 AGENTS.md，grok-build 把规则做进产品但没给自己写（来自 AI 友好性对比）
+
+| 维度 | codex | grok-build |
+|---|---|---|
+| AI 规则文件 | ✅ 22KB AGENTS.md（编码规范/测试/架构边界/上下文注入硬规则/变更规模限制） | ❌ 无任何 AI 规则文件 |
+| 规则可执行性 | 带 `just` 命令、行数限制（<500 LoC）、token 限制（<10K），AI 可验证合规 | 靠 README 表 + clippy.toml 注释间接引导，无显式规则 |
+| 配置 schema | 5732 行 JSON Schema（自动生成） | 主配置无 schema |
+| 测试指引 | AGENTS.md 明确"改 tui 跑 tui、改 core 跑全量" | 无"改 X 必跑 Y"映射 |
+| 产品端规则支持 | 读取项目 AGENTS.md | 内建扫描多 vendor 目录（.grok/.claude/.cursor/rules） |
+
+**启示**：codex 是"AI 友好性"的标杆——一份详尽、可执行、带工程化约束的 AGENTS.md 让 AI 几乎能"无师自通"。grok-build 产品端对用户项目的 AI 规则支持更好，但自身仓库缺乏自描述（可能是从内部 monorepo 同步，内部有未公开的规则体系）。
+
+---
+
 ## 结论 -3：能力边界与工程化是维度 9-10 最大的差异点（来自维度 9-10 对比）
 
 | 维度 | codex | grok-build |
