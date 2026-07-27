@@ -4,3 +4,6 @@
 [submodule "agents/grok-build"]
 	path = agents/grok-build
 	url = https://github.com/xai-org/grok-build.git
+[submodule "agents/opencode"]
+	path = agents/opencode
+	url = https://github.com/anomalyco/opencode.git

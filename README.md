@@ -23,6 +23,7 @@ harness-comparison/
 |------|---------------|----------|--------|------|
 | [codex](https://github.com/openai/codex) | `81da9deb06` | Rust / TypeScript | Apache-2.0 | OpenAI 官方 CLI Agent |
 | [grok-build](https://github.com/xai-org/grok-build) | `69f0ba880a` | Rust | 专有（SpaceXAI） | xAI 官方 CLI Agent |
+| [opencode](https://github.com/anomalyco/opencode) | `35075bb466` | TypeScript | MIT | 社区开源 CLI Agent（grok-build 移植了它的工具） |
 
 ## 对比维度（10 个，详见 `docs/comparison-matrix.md`）
 
