@@ -1,5 +1,20 @@
 # 阶段性结论
 
+## 结论 -5：三方工程哲学根本分野（来自 codex/grok-build/opencode 三方对比）
+
+| | Codex | Grok-build | Opencode |
+|---|---|---|---|
+| **定位** | OpenAI 官方 Rust，「单一工具做精」 | XAI 内部，「移植拼装 + 加密闭源」 | 社区开源 TS，「多 provider + 声明式 UI」 |
+| **编辑哲学** | 极简：唯一 apply_patch，freeform 非 JSON，流式 | 折中：三套并存（移植 codex + 移植 opencode + 自研），JSON | 迭代：V1 完整 → V2 精简，JSON |
+| **可见性** | 明文 prompt + 明文规则 | 加密 prompt + 无规则 | 明文 prompt + 详尽规则 |
+| **重试/容错** | 可配置，平衡 | 最激进（15 次 + doom-loop） | 几乎不重试（默认 0） |
+| **TUI** | 自研 flex + fork ratatui | 上游 ratatui 原生 | 自研 @opentui（SolidJS） |
+| **AI 协作** | 命令式硬约束（行数/token 限制） | 无规则层 | 术语表 + 架构不变量 |
+
+**关键发现**：grok-build 是 codex 与 opencode 的「功能移植中转站」——同时移植 codex 的 apply_patch（保留解析+4 级模糊匹配，剥离 I/O/沙箱/流式）与 opencode 的 edit/write（仅保留精确替换骨架，删除 BOM/格式化/LSP/模糊匹配）。grok-build 的 apply_patch_template 也直接复用 codex 模板。
+
+---
+
 ## 结论 -4：AI 友好性——codex 有详尽 AGENTS.md，grok-build 把规则做进产品但没给自己写（来自 AI 友好性对比）
 
 | 维度 | codex | grok-build |
